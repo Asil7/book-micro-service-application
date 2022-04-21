@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="EurekaServer" />
         <module name="BookService" />
+        <module name="book-review" />
         <module name="HystrixDashboard" />
         <module name="FeignClients" />
         <module name="ApiGateway" />
@@ -23,6 +24,7 @@
       <module name="EurekaServer" options="-parameters" />
       <module name="FeignClients" options="-parameters" />
       <module name="HystrixDashboard" options="-parameters" />
+      <module name="book-review" options="-parameters" />
     </option>
   </component>
 </project>
