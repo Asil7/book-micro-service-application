@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uz.pdp.bookreview.entity.BookReview;
+import uz.pdp.bookreview.entity.enums.Status;
 import uz.pdp.bookreview.repository.BookReviewRepository;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class BookReviewService {
     }
 
     public ResponseEntity<?> getBookReviewByBookId(Integer bookId) {
-        List<BookReview> byBookId = bookReviewRepository.getByBookId(bookId);
+        List<BookReview> byBookId = bookReviewRepository.findAllByBookIdAndStatus(bookId, Status.ACCEPTED);
         if (byBookId.size() != 0) {
             return new ResponseEntity<>(byBookId, HttpStatus.OK);
         }

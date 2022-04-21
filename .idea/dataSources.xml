@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="book_service_db@localhost" uuid="5e114ea1-1d26-4036-87aa-8328e27c899d">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/book_service_db</jdbc-url>
-    <data-source source="LOCAL" name="book_review_service_db@localhost" uuid="b6f31004-4ba2-47b6-a54f-652f1824d29e">
+    <data-source source="LOCAL" name="book_review_service_db@localhost" uuid="6aec8975-1233-42d9-ab5b-8c5766f3f597">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

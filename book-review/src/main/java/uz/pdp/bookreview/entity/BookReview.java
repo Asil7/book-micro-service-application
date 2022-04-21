@@ -10,6 +10,7 @@ import uz.pdp.bookreview.entity.enums.Status;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,7 +18,8 @@ import java.sql.Timestamp;
 @Entity(name = "book_reviews")
 public class BookReview {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY
+    )
     private Integer id;
 
     @Column(nullable = false)
@@ -28,15 +30,15 @@ public class BookReview {
 
     private String reviewBody;
 
-    private Integer rate;
+    private Integer rate = 0;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.NEW;
 
     @OrderBy
     @CreationTimestamp
-    @Column(nullable = false, updatable = false)
-    private Timestamp createdAt;
+    @Column(nullable = false, updatable = false, columnDefinition = " timestamp default now() ")
+    private Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
 
 
 }

@@ -39,9 +39,9 @@ public class BookService {
             bookMap.put("bookTitle", book.getTitle());
             bookMap.put("attachmentId", book.getAttachmentId());
 
-//            String continentUrl = "http://BOOK-REVIEW-SERVICE/api/book-review-service/average-rating/";
-//            Double averageRating = restTemplate.getForObject(continentUrl +  book.getId(), Double.class);
-//            bookMap.put("averageRating", averageRating);
+            String continentUrl = "http://BOOK-REVIEW-SERVICE/api/book-review-service/average-rating/";
+            Double averageRating = restTemplate.getForObject(continentUrl +  book.getId(), Double.class);
+            bookMap.put("averageRating", averageRating);
             bookList.add(bookMap);
         }
 
