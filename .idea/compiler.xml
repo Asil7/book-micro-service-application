@@ -2,11 +2,13 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="EurekaServer" />
+        <module name="BookService" />
         <module name="HystrixDashboard" />
         <module name="FeignClients" />
         <module name="ApiGateway" />
@@ -16,6 +18,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ApiGateway" options="-parameters" />
+      <module name="BookService" options="-parameters" />
       <module name="Book_Micro_Service_Application" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
       <module name="FeignClients" options="-parameters" />

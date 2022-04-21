@@ -6,22 +6,26 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: continent
-          uri: lb://continent
+        - id: user-service
+          uri: lb://user-service
           predicates:
-            - Path=/api/continent/**
-        - id: region
-            uri: lb://region
+            - Path=/api/user-service/**
+        - id: attachment-service
+            uri: lb://attachment-service
             predicates:
-              - Path=/api/region/**
-        - id: country
-          uri: lb://country
+              - Path=/api/attachment-service/**
+        - id: book-review-service
+            uri: lb://book-review-service
+            predicates:
+              - Path=/api/book-review-service/**
+        - id: book-service
+          uri: lb://book-service
           predicates:
-            - Path=/api/country/**
+            - Path=/api/book-service/**
           filters:
             name: CircuitBreaker
             args:
-              - name: continent
+              - name: book-service
               - fallbackuri: forward:/fall-back-uri
 hystrix:
   command:

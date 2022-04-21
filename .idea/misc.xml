@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/EurekaServer/pom.xml" />
         <option value="$PROJECT_DIR$/FeignClients/pom.xml" />
         <option value="$PROJECT_DIR$/HystrixDashboard/pom.xml" />
+        <option value="$PROJECT_DIR$/BookService/pom.xml" />
       </list>
     </option>
   </component>
