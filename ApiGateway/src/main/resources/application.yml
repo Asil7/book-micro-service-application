@@ -1,0 +1,44 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: ApiGateway
+  cloud:
+    gateway:
+      routes:
+        - id: continent
+          uri: lb://continent
+          predicates:
+            - Path=/api/continent/**
+        - id: region
+            uri: lb://region
+            predicates:
+              - Path=/api/region/**
+        - id: country
+          uri: lb://country
+          predicates:
+            - Path=/api/country/**
+          filters:
+            name: CircuitBreaker
+            args:
+              - name: continent
+              - fallbackuri: forward:/fall-back-uri
+hystrix:
+  command:
+    fallbackcommand:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+management:
+  endpoint:
+    web:
+      exposure:
+        include: hystrix.stream
+
+
+eureka:
+  client:
+    service-url:
+      defoultZone: http://lacahost:8761/eureka
