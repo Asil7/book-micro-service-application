@@ -8,6 +8,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="EurekaServer" />
+        <module name="BookService" />
+        <module name="book-review" />
         <module name="HystrixDashboard" />
         <module name="Api-Attachment" />
         <module name="FeignClients" />
@@ -19,10 +21,12 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Api-Attachment" options="-parameters" />
       <module name="ApiGateway" options="-parameters" />
+      <module name="BookService" options="-parameters" />
       <module name="Book_Micro_Service_Application" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
       <module name="FeignClients" options="-parameters" />
       <module name="HystrixDashboard" options="-parameters" />
+      <module name="book-review" options="-parameters" />
     </option>
   </component>
 </project>
