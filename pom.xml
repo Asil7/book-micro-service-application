@@ -16,6 +16,7 @@
         <module>ApiGateway</module>
         <module>HystrixDashboard</module>
         <module>FeignClients</module>
+        <module>Api-Attachment</module>
     </modules>
 
     <groupId>uz.pdp</groupId>
