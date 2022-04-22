@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import uz.pdp.bookservice.common.ApiResponse;
+import uz.pdp.bookservice.dto.BookReviewDto;
 import uz.pdp.bookservice.entity.Book;
 import uz.pdp.bookservice.entity.BookCollection;
 import uz.pdp.bookservice.repository.AuthorRepository;
@@ -61,9 +62,9 @@ public class BookService {
         bookMap.put("createdBy", book.getUserId());
         bookMap.put("authors", book.getAuthors());
 
-//        String continentUrl = "http://BOOK-REVIEW-SERVICE/api/book-review-service/" + book.getId();
-//        Double averageRating = restTemplate.getForObject(continentUrl + book.getId(), Double.class);
-//        bookMap.put("reviews", averageRating);
+        String continentUrl = "http://BOOK-REVIEW-SERVICE/api/book-review-service/" + book.getId();
+        BookReviewDto[] bookReviews = restTemplate.getForObject(continentUrl, BookReviewDto[].class);
+        bookMap.put("reviews", bookReviews);
 
         return new ApiResponse("Ok", true, bookMap);
     }

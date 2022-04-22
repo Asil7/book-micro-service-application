@@ -27,10 +27,7 @@ public class BookReviewService {
 
     public ResponseEntity<?> getBookReviewByBookId(Integer bookId) {
         List<BookReview> byBookId = bookReviewRepository.findAllByBookIdAndStatus(bookId, Status.ACCEPTED);
-        if (byBookId.size() != 0) {
-            return new ResponseEntity<>(byBookId, HttpStatus.OK);
-        }
-        return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(byBookId, HttpStatus.OK);
     }
 
     public ResponseEntity<?> saveBookReview(BookReview bookReview) {
