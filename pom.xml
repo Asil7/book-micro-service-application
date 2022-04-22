@@ -17,6 +17,8 @@
         <module>HystrixDashboard</module>
         <module>FeignClients</module>
         <module>Api-Attachment</module>
+        <module>book-review</module>
+        <module>BookService</module>
     </modules>
 
     <groupId>uz.pdp</groupId>

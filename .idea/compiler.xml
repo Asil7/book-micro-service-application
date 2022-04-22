@@ -16,6 +16,10 @@
         <module name="ApiGateway" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="wrapper (1)" target="1.5" />
+      <module name="wrapper (2)" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
