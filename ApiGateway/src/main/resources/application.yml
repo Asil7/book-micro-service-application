@@ -22,25 +22,25 @@ spring:
           uri: lb://book-service
           predicates:
             - Path=/api/book-service/**
-          filters:
-            name: CircuitBreaker
-            args:
-              - name: book-service
-              - fallbackuri: forward:/fall-back-uri
-hystrix:
-  command:
-    fallbackcommand:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 5000
-
-management:
-  endpoint:
-    web:
-      exposure:
-        include: hystrix.stream
-
+#          filters:
+#            name: CircuitBreaker
+#            args:
+#              - name: book-service
+#              - fallbackuri: forward:/fall-back-uri
+#hystrix:
+#  command:
+#    fallbackcommand:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 5000
+#
+#management:
+#  endpoint:
+#    web:
+#      exposure:
+#        include: hystrix.stream
+#
 
 eureka:
   client:

@@ -12,6 +12,7 @@
         <module name="book-review" />
         <module name="HystrixDashboard" />
         <module name="Api-Attachment" />
+        <module name="EmailService" />
         <module name="FeignClients" />
         <module name="ApiGateway" />
       </profile>
@@ -27,6 +28,7 @@
       <module name="ApiGateway" options="-parameters" />
       <module name="BookService" options="-parameters" />
       <module name="Book_Micro_Service_Application" options="-parameters" />
+      <module name="EmailService" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
       <module name="FeignClients" options="-parameters" />
       <module name="HystrixDashboard" options="-parameters" />

@@ -1,16 +1,17 @@
-package uz.pdp.apigateway;
+package uz.pdp.emailservice;
 
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-
 @SpringBootApplication
 @EnableEurekaClient
-//@EnableHystrix
-public class ApiGatewayApplication {
+@EnableRabbit
+public class EmailServiceApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(ApiGatewayApplication.class, args);
+        SpringApplication.run(EmailServiceApplication.class, args);
     }
 
 }
