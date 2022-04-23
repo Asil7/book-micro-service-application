@@ -5,6 +5,7 @@ package uz.pdp.bookreview.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uz.pdp.bookreview.common.ApiResponse;
 import uz.pdp.bookreview.entity.BookReview;
 import uz.pdp.bookreview.service.BookReviewService;
 
@@ -27,7 +28,8 @@ public class BookReviewController {
 
     @PostMapping
     public ResponseEntity<?> saveBookReview(@RequestBody BookReview bookReview) {
-        return bookReviewService.saveBookReview(bookReview);
+        ApiResponse apiResponse = bookReviewService.saveBookReview(bookReview);
+        return ResponseEntity.status(apiResponse.isSuccess()? 202 : 409).body(apiResponse.getObject());
     }
 
     @DeleteMapping("/{id}")
