@@ -10,7 +10,6 @@
         <module name="EurekaServer" />
         <module name="BookService" />
         <module name="book-review" />
-        <module name="HystrixDashboard" />
         <module name="Api-Attachment" />
         <module name="EmailService" />
         <module name="FeignClients" />
@@ -18,6 +17,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="HystrixDashboard" target="8" />
       <module name="wrapper (1)" target="1.5" />
       <module name="wrapper (2)" target="1.5" />
     </bytecodeTargetLevel>

@@ -8,13 +8,16 @@ import org.springframework.web.bind.annotation.*;
 import uz.pdp.bookreview.common.ApiResponse;
 import uz.pdp.bookreview.entity.BookReview;
 import uz.pdp.bookreview.service.BookReviewService;
+import uz.pdp.clients.bookReview.BookReviewDto;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/book-review-service")
 public class BookReviewController {
-
     @Autowired
     BookReviewService bookReviewService;
+
 
     @GetMapping
     public ResponseEntity<?> getAllBookReview() {
@@ -22,14 +25,14 @@ public class BookReviewController {
     }
 
     @GetMapping("/{bookId}")
-    public ResponseEntity<?> getBookReviewsByBookId(@PathVariable Integer bookId) {
+    public List<BookReviewDto> getBookReviewsByBookId(@PathVariable Integer bookId) {
         return bookReviewService.getBookReviewByBookId(bookId);
     }
 
     @PostMapping
     public ResponseEntity<?> saveBookReview(@RequestBody BookReview bookReview) {
         ApiResponse apiResponse = bookReviewService.saveBookReview(bookReview);
-        return ResponseEntity.status(apiResponse.isSuccess()? 202 : 409).body(apiResponse.getObject());
+        return ResponseEntity.status(apiResponse.isSuccess() ? 202 : 409).body(apiResponse.getObject());
     }
 
     @DeleteMapping("/{id}")
@@ -38,8 +41,15 @@ public class BookReviewController {
     }
 
     @GetMapping("/average-rating/{bookId}")
-    public ResponseEntity<?> getAverageRate(@PathVariable Integer bookId){
+    public ResponseEntity<?> getAverageRate(@PathVariable Integer bookId) {
         return bookReviewService.getAverageRate(bookId);
+    }
+
+    @GetMapping("/review")
+    public ResponseEntity<?> setReviewStatus(@RequestParam(name = "isAccepted") boolean isAccepted,
+                                            @RequestParam(name = "reviewId") Integer reviewId) {
+        ApiResponse apiResponse = bookReviewService.setReviewStatus(isAccepted, reviewId);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
     }
 
 }

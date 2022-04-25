@@ -16,9 +16,12 @@ import uz.pdp.bookreview.dto.ReviewEmailDto;
 import uz.pdp.bookreview.entity.BookReview;
 import uz.pdp.bookreview.entity.enums.Status;
 import uz.pdp.bookreview.repository.BookReviewRepository;
+import uz.pdp.clients.book.BookClient;
+import uz.pdp.clients.bookReview.BookReviewDto;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -29,6 +32,7 @@ public class BookReviewService {
     private final BookReviewRepository bookReviewRepository;
     private final RabbitTemplate rabbitTemplate;
     private final RestTemplate restTemplate;
+    private final BookClient bookClient;
 
     @Value("${spring.rabbitmq.exchange}")
     String exchange;
@@ -40,9 +44,16 @@ public class BookReviewService {
         return ResponseEntity.ok(all);
     }
 
-    public ResponseEntity<?> getBookReviewByBookId(Integer bookId) {
+    public List<BookReviewDto> getBookReviewByBookId(Integer bookId) {
         List<BookReview> byBookId = bookReviewRepository.findAllByBookIdAndStatus(bookId, Status.ACCEPTED);
-        return new ResponseEntity<>(byBookId, HttpStatus.OK);
+
+        List<BookReviewDto> bookReviewDtoList = new ArrayList<>();
+        for (BookReview bookReview : byBookId) {
+            BookReviewDto bookReviewDto = new BookReviewDto(bookReview.getId(), bookReview.getBookId(), bookReview.getUserId(),
+                    bookReview.getReviewBody(), bookReview.getRate(), bookReview.getCreatedAt());
+            bookReviewDtoList.add(bookReviewDto);
+        }
+        return bookReviewDtoList;
     }
 
     public ApiResponse saveBookReview(BookReview bookReview) {
@@ -51,8 +62,9 @@ public class BookReviewService {
         bookReview.setUserId(1);
         BookReview savedBookReview = bookReviewRepository.save(bookReview);
 
-        String continentUrl = "http://BOOK-SERVICE/api/book-service/view/" + bookReview.getBookId();
-        Map<String, Object> bookMap = restTemplate.getForObject(continentUrl, Map.class);
+//        String bookUrl = "http://BOOK-SERVICE/api/book-service/view/" + bookReview.getBookId();
+//        Map<String, Object> bookMap = restTemplate.getForObject(bookUrl, Map.class);
+        Map<String, Object> bookMap = bookClient.getBookInfo(bookReview.getBookId());
 
 
         ReviewEmailDto reviewEmailDto = new ReviewEmailDto();
@@ -61,7 +73,7 @@ public class BookReviewService {
         reviewEmailDto.setReviewAuthorName("Nodirbek Nurqulov");
         reviewEmailDto.setReceiverEmail("abdulaziz2000go@gmail.com");
         reviewEmailDto.setAcceptUrl("http://localhost:8082/api/book-review-service/review?isAccepted=true&reviewId=" + savedBookReview.getId());
-        reviewEmailDto.setRejectUrl("http://localhost:8082/api/book-review-service/review?isAccepted=false$reviewId=" + savedBookReview.getId());
+        reviewEmailDto.setRejectUrl("http://localhost:8082/api/book-review-service/review?isAccepted=false&reviewId=" + savedBookReview.getId());
         reviewEmailDto.setSubject("New book review for your Book");
         sendEmailToBookCreator(reviewEmailDto);
 
@@ -84,5 +96,20 @@ public class BookReviewService {
         Double average = bookReviewRepository.getAverage(bookId);
         return ResponseEntity.ok(average);
 
+    }
+
+    public ApiResponse setReviewStatus(boolean isAccepted, Integer reviewId) {
+        Optional<BookReview> optionalBookReview = bookReviewRepository.findById(reviewId);
+        if (!optionalBookReview.isPresent()) return new ApiResponse("Not found", false);
+        BookReview bookReview = optionalBookReview.get();
+
+        if (isAccepted){
+            bookReview.setStatus(Status.ACCEPTED);
+        } else {
+            bookReview.setStatus(Status.REJECTED);
+        }
+
+        bookReviewRepository.save(bookReview);
+        return new ApiResponse(isAccepted ? "Review is Accepted" : "Review is rejected", true);
     }
 }

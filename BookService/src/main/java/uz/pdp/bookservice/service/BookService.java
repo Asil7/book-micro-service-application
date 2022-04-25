@@ -1,33 +1,33 @@
 package uz.pdp.bookservice.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import uz.pdp.bookservice.common.ApiResponse;
-import uz.pdp.bookservice.dto.BookReviewDto;
 import uz.pdp.bookservice.entity.Book;
 import uz.pdp.bookservice.entity.BookCollection;
 import uz.pdp.bookservice.repository.AuthorRepository;
 import uz.pdp.bookservice.repository.BookCollectionRepository;
 import uz.pdp.bookservice.repository.BookRepository;
+import uz.pdp.clients.bookReview.BookReviewClient;
+import uz.pdp.clients.bookReview.BookReviewDto;
+import uz.pdp.clients.continent.ContinentClient;
+import uz.pdp.clients.continent.ContinentDto;
 
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
     private final RestTemplate restTemplate;
     private final AuthorRepository authorRepository;
     private final BookCollectionRepository bookCollectionRepository;
+    private final BookReviewClient bookReviewClient;
 
-    public BookService(BookRepository bookRepository, RestTemplate restTemplate, AuthorRepository authorRepository, BookCollectionRepository bookCollectionRepository) {
-        this.bookRepository = bookRepository;
-        this.restTemplate = restTemplate;
-        this.authorRepository = authorRepository;
-        this.bookCollectionRepository = bookCollectionRepository;
-    }
 
     public List<Map<String, Object>> getAllBooks(Integer page, Integer size, String search) {
         Pageable pageable = PageRequest.of(page, size);
@@ -40,8 +40,10 @@ public class BookService {
             bookMap.put("bookTitle", book.getTitle());
             bookMap.put("attachmentId", book.getAttachmentId());
 
-            String continentUrl = "http://BOOK-REVIEW-SERVICE/api/book-review-service/average-rating/";
-            Double averageRating = restTemplate.getForObject(continentUrl +  book.getId(), Double.class);
+//            String continentUrl = "http://BOOK-REVIEW-SERVICE/api/book-review-service/average-rating/";
+//            Double averageRating = restTemplate.getForObject(continentUrl +  book.getId(), Double.class);
+
+            Double averageRating = bookReviewClient.getBookAverageRating(book.getId());
             bookMap.put("averageRating", averageRating);
             bookList.add(bookMap);
         }
@@ -62,8 +64,10 @@ public class BookService {
         bookMap.put("createdBy", book.getUserId());
         bookMap.put("authors", book.getAuthors());
 
-        String continentUrl = "http://BOOK-REVIEW-SERVICE/api/book-review-service/" + book.getId();
-        BookReviewDto[] bookReviews = restTemplate.getForObject(continentUrl, BookReviewDto[].class);
+//        String continentUrl = "http://BOOK-REVIEW-SERVICE/api/book-review-service/" + book.getId();
+//        BookReviewDto[] bookReviews = restTemplate.getForObject(continentUrl, BookReviewDto[].class);
+
+        List<BookReviewDto> bookReviews = bookReviewClient.getBookReviews(bookId);
         bookMap.put("reviews", bookReviews);
 
         return new ApiResponse("Ok", true, bookMap);
@@ -85,5 +89,18 @@ public class BookService {
         }
 
         return new ApiResponse("Ok", true, bookList);
+    }
+
+    public ApiResponse addBookToCollection(Integer bookId) {
+        Optional<Book> optionalBook = bookRepository.findById(bookId);
+        if (!optionalBook.isPresent()) return new ApiResponse("Book not found", false);
+        Book book = optionalBook.get();
+
+        boolean existsInCollection = bookCollectionRepository.existsByUserIdAndBookId(1, bookId);
+        if (existsInCollection) return new ApiResponse("This book is already exists in your collection", false);
+
+        BookCollection bookCollection = new BookCollection(null, 1, book);
+        bookCollectionRepository.save(bookCollection);
+        return new ApiResponse("Successfully added to book Collection", true);
     }
 }

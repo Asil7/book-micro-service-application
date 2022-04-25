@@ -23,5 +23,6 @@ public interface BookCollectionRepository extends JpaRepository<BookCollection, 
 
     List<BookCollection> findAllByUserId(Pageable pageable, Integer userId);
 
+    boolean existsByUserIdAndBookId(Integer userId, Integer book_id);
 
 }
