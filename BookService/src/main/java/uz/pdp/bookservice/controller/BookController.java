@@ -31,7 +31,7 @@ public class BookController {
     @GetMapping("/view/{bookId}")
     public HttpEntity<?> getBookById(@PathVariable Integer bookId) {
         ApiResponse apiResponse = bookService.getBookById(bookId);
-        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse.getObject());
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse.isSuccess() ? apiResponse.getObject() : null);
     }
 
     @GetMapping("/user-collection/{userId}")
@@ -42,5 +42,10 @@ public class BookController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse.getObject());
     }
 
+    @PostMapping("/add-book-to-collection/{bookId}")
+    public HttpEntity<?> addBookToCollection(@PathVariable Integer bookId) {
+        ApiResponse apiResponse = bookService.addBookToCollection(bookId);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 404).body(apiResponse);
+    }
 
 }

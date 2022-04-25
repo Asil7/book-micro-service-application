@@ -14,7 +14,6 @@
     <modules>
         <module>EurekaServer</module>
         <module>ApiGateway</module>
-        <module>HystrixDashboard</module>
         <module>FeignClients</module>
         <module>Api-Attachment</module>
         <module>book-review</module>
@@ -54,6 +53,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>3.1.1</version>
         </dependency>
     </dependencies>
 

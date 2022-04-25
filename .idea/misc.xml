@@ -8,12 +8,16 @@
         <option value="$PROJECT_DIR$/ApiGateway/pom.xml" />
         <option value="$PROJECT_DIR$/EurekaServer/pom.xml" />
         <option value="$PROJECT_DIR$/FeignClients/pom.xml" />
-        <option value="$PROJECT_DIR$/HystrixDashboard/pom.xml" />
         <option value="$PROJECT_DIR$/Api-Attachment/pom.xml" />
         <option value="$PROJECT_DIR$/BookService/pom.xml" />
         <option value="$PROJECT_DIR$/book-review/pom.xml" />
         <option value="$PROJECT_DIR$/EmailService/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/HystrixDashboard/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">

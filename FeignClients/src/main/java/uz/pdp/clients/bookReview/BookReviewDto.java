@@ -1,20 +1,16 @@
-package uz.pdp.bookservice.dto;
+package uz.pdp.clients.bookReview;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.experimental.PackagePrivate;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OrderBy;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@PackagePrivate
 public class BookReviewDto {
     private Integer id;
     private Integer bookId;
